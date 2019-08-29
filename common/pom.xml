@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>common-framework</module>
+        <module>mall-spring-boot</module>
     </modules>
 
 

@@ -13,6 +13,7 @@
     <name>system</name>
     <modules>
         <module>system-service-api</module>
+        <module>system-sdk</module>
     </modules>
     <packaging>pom</packaging>
 
