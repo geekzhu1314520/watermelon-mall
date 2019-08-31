@@ -18,7 +18,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnClass({DispatcherServlet.class, WebMvcConfigurer.class, AccessLogInterceptor.class})
+@ConditionalOnClass({
+        DispatcherServlet.class,
+        WebMvcConfigurer.class,
+        AccessLogInterceptor.class,
+        AdminSecurityInterceptor.class
+})
 public class AdminMVCAutoConfiguration implements WebMvcConfigurer {
 
     @Bean

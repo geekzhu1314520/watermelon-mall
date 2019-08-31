@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 @Documented
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestPermissions {
+public @interface RequestsPermissions {
 
     /**
      * 当有多个标识时，必须全部拥有权限，才可以操作

@@ -10,10 +10,10 @@ import com.watermelon.mall.admin.api.bo.admin.AdminAuthorizationBO;
 import com.watermelon.mall.admin.api.bo.oauth2.OAuth2AuthenticationBO;
 import com.watermelon.mall.admin.api.constant.AdminErrorCodeEnum;
 import com.watermelon.mall.admin.api.dto.oauth2.OAuth2GetTokenDTO;
-import com.watermelon.mall.admin.sdk.annotation.RequestPermissions;
+import com.watermelon.mall.admin.sdk.annotation.RequestsPermissions;
 import com.watermelon.mall.admin.sdk.context.AdminSecurityContext;
 import com.watermelon.mall.admin.sdk.context.AdminSecurityContextHolder;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.dubbo.config.annotation.Reference;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -29,9 +29,9 @@ import java.util.Set;
 @Component
 public class AdminSecurityInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
+    @Reference(validation = "true", version = "${dubbo.consumer.OAuth2Service.version:1.0.0}")
     private OAuth2Service oAuth2Service;
-    @Autowired
+    @Reference(validation = "true", version = "${dubbo.consumer.AdminService.version:1.0.0}")
     private AdminService adminService;
 
     @Value("${admins.security.ignore_urls:#{null}}")
@@ -88,15 +88,15 @@ public class AdminSecurityInterceptor extends HandlerInterceptorAdapter {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        super.afterCompletion(request, response, handler, ex);
+        AdminSecurityContextHolder.clear();
     }
 
     private AdminAuthorizationBO checkPermission(Object handler, OAuth2AuthenticationBO authenticationBO) {
         Assert.isTrue(handler instanceof HandlerMethod, "handler必须是 HandlerMethod 类型");
         HandlerMethod handlerMethod = (HandlerMethod) handler;
-        RequestPermissions requestPermissions = handlerMethod.getMethodAnnotation(RequestPermissions.class);
+        RequestsPermissions requestsPermissions = handlerMethod.getMethodAnnotation(RequestsPermissions.class);
         return adminService.checkPermission(authenticationBO.getUserId(),
-                requestPermissions != null ? Arrays.asList(requestPermissions.value()) : null);
+                requestsPermissions != null ? Arrays.asList(requestsPermissions.value()) : null);
     }
 
 }

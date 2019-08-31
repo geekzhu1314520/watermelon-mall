@@ -5,6 +5,7 @@ import com.watermelon.common.framework.servlet.CorsFilter;
 import com.watermelon.mall.spring.boot.web.handler.GlobalExceptionHandler;
 import com.watermelon.mall.spring.boot.web.handler.GlobalResponseBodyHandler;
 import com.watermelon.mall.spring.boot.web.interceptor.AccessLogInterceptor;
+import com.watermelon.mall.user.sdk.interceptor.UserSecurityInterceptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
@@ -17,12 +18,23 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ConditionalOnWebApplication(type = ConditionalOnWebApplication.Type.SERVLET)
-@ConditionalOnClass({DispatcherServlet.class, WebMvcConfigurer.class, AccessLogInterceptor.class})
+@ConditionalOnClass({
+        DispatcherServlet.class,
+        WebMvcConfigurer.class,
+        AccessLogInterceptor.class,
+        UserSecurityInterceptor.class
+})
 public class UserMVCAutoConfiguration implements WebMvcConfigurer {
 
     @Bean
     public AccessLogInterceptor userAccessLogInterceptor() {
         return new AccessLogInterceptor();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(UserSecurityInterceptor.class)
+    public UserSecurityInterceptor userSecurityInterceptor() {
+        return new UserSecurityInterceptor();
     }
 
     @Bean
@@ -40,6 +52,7 @@ public class UserMVCAutoConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(userAccessLogInterceptor()).addPathPatterns(MallConstants.ROOT_PATH_USER);
+        registry.addInterceptor(userSecurityInterceptor()).addPathPatterns(MallConstants.ROOT_PATH_USER);
     }
 
     @Bean

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.watermelon.mall.spring.boot.web.AdminMVCAutoConfiguration, \
+com.watermelon.mall.spring.boot.web.UserMVCAutoConfiguration

@@ -10,6 +10,7 @@
     <modules>
         <module>system</module>
         <module>common</module>
+        <module>user</module>
     </modules>
 
     <packaging>pom</packaging>
