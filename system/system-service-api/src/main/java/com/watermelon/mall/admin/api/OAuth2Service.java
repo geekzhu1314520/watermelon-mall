@@ -1,7 +1,7 @@
 package com.watermelon.mall.admin.api;
 
-import com.watermelon.mall.admin.api.bo.OAuth2AccessTokenBO;
-import com.watermelon.mall.admin.api.bo.OAuth2AuthenticationBO;
+import com.watermelon.mall.admin.api.bo.oauth2.OAuth2AccessTokenBO;
+import com.watermelon.mall.admin.api.bo.oauth2.OAuth2AuthenticationBO;
 import com.watermelon.mall.admin.api.dto.oauth2.OAuth2CreateTokenDTO;
 import com.watermelon.mall.admin.api.dto.oauth2.OAuth2GetTokenDTO;
 import com.watermelon.mall.admin.api.dto.oauth2.OAuth2RefreshTokenDTO;

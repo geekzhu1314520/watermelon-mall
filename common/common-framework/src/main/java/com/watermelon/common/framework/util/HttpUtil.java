@@ -36,4 +36,16 @@ public class HttpUtil {
         return request.getRemoteAddr();
     }
 
+    public static String obtainAuthorization(HttpServletRequest request) {
+        String authorization = request.getHeader("Bearer ");
+        if (!StringUtils.hasText(authorization)) {
+            return null;
+        }
+        int index = authorization.indexOf("Bearer ");
+        if (index == -1) {
+            return null;
+        }
+        return authorization.substring(index + 7).trim();
+    }
+
 }

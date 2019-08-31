@@ -26,3 +26,5 @@ hs_err_pid*
 
 /watermelon-mall.iml
 /.idea/
+/common/common-framework/target/
+/common/mall-spring-boot/target/

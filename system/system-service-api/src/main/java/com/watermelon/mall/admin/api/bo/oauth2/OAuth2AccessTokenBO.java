@@ -1,4 +1,4 @@
-package com.watermelon.mall.admin.api.bo;
+package com.watermelon.mall.admin.api.bo.oauth2;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
